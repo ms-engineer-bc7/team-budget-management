@@ -1,0 +1,37 @@
+version: '3'
+services:
+ db:
+    image: postgres
+    ports:
+         - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: teamb
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: teamb
+
+ backend:
+    build: ./back
+    tty: true
+    ports:
+      - 3002:3000
+    volumes:
+      - ./back:/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://teamb:password@db/teamb
+
+ frontend:
+    build:
+      context: ./front
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+    depends_on:
+      - backend
+
+volumes:
+ postgres_data:
