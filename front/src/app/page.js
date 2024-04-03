@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { Heading, Flex, Box, Link, ChakraProvider } from '@chakra-ui/react';
+import Balance from '@/components/balance';
+// import axios from 'axios';
 // import { useRouter } from 'next/navigation';
 
 // 子口座の型定義
@@ -33,8 +35,9 @@ export default function Home() {
         <Box padding="5" width="70%" >
           <Heading as="h2" size="xl" marginBottom="5" textAlign="center">
             生活費予算管理
-          </Heading>    
+          </Heading>
           <Heading as="h3" fontSize="20" marginBottom="5" textAlign="center">
+          <Balance />
              つかいわけ口座一覧
           </Heading>  
           {accounts.map(account => (
