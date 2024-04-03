@@ -1,18 +1,18 @@
-var createError = require('http-errors');
-var express = require('express');
+const createError = require('http-errors');
+const express = require('express');
+// const request = require('request');//APIリクエストルート作成
 const cors = require('cors'); //4/2追加
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+// const axios = require('axios'); // axiosをrequire
+const indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
-
-
+const balanceRouter = require('./routes/balance'); 
+var accountListRouter = require('./routes/accountList');//4/3追加
 const transferRouter = require('./routes/transfer'); //振替
-
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,9 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
-
-
+app.use('/accountList', accountListRouter);//4/3追加
+app.use('/balance', balanceRouter); 
 app.use('/transfer', transferRouter);//振替
 
 // catch 404 and forward to error handler
