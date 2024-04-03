@@ -10,7 +10,7 @@ const indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 
 const balanceRouter = require('./routes/balance'); 
-var accountListRouter = require('./routes/accountList');//4/3追加
+const accountListRouter = require('./routes/accountList');//4/3追加
 const transferRouter = require('./routes/transfer'); //振替
 const app = express();
 
@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/users', usersRouter);
 app.use('/balance', balanceRouter); 
 app.use('/accountList', accountListRouter);//4/3追加
 app.use('/transfer', transferRouter);//振替
