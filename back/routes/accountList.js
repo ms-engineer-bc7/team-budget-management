@@ -20,7 +20,14 @@ router.get('/', function(req, res, next) {
       return;
     }
     try {
-      res.json(JSON.parse(body).spAccounts[1].spAccountName);
+      // res.json(JSON.parse(body).spAccounts[1].spAccountName);
+       const parsedBody = JSON.parse(body);
+       // spAccounts配列からすべてのspAccountNameを抽出
+       const accountNames = parsedBody.spAccounts.map(function(account) {
+         return account.spAccountName;
+       });
+       // クライアントにすべてのアカウント名をJSON形式で返す
+       res.json(accountNames);
     } catch (parseError) {
       console.error(parseError);
       res.status(500).send('レスポンスのパースに失敗しました。');
@@ -29,4 +36,3 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
-
