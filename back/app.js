@@ -27,8 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/accountList', accountListRouter);//4/3追加
 app.use('/balance', balanceRouter); 
+app.use('/accountList', accountListRouter);//4/3追加
 app.use('/transfer', transferRouter);//振替
 
 // catch 404 and forward to error handler
