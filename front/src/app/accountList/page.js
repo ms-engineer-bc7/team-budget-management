@@ -20,7 +20,7 @@ export default function AccountList() {
 
   return (
     <div>
-      <h1>口座一覧</h1>
+      {/* <h1>口座一覧</h1> */}
       <ul>
         {accounts.map((account, index) => (
           <li key={index}>{account}</li>
