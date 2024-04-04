@@ -17,10 +17,10 @@ router.post('/', async(req, res) => {
         'x-access-token': 'ZGY3ZWRhMzkxMzNhNmExOTBjN2EwMmM0'
       },
       data: {  // ここをbodyからdataに変更
-        "depositSpAccountId":"SP50220608077",   //req.body.depositSpAccountId,
+        "depositSpAccountId":req.body.depositSpAccountId, //"SP50220608077", 
         "debitSpAccountId":"SP30110008396",   //req.body.debitSpAccountId,
         "currencyCode":"JPY",   //req.body.currencyCode,
-        "paymentAmount":"1000"  //req.body.paymentAmount
+        "paymentAmount":req.body.paymentAmount  //"1000" 
       },
       json: true
     };

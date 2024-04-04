@@ -2,8 +2,9 @@
 import { useState, useEffect } from 'react';
 import { Heading, Flex, Box, Link, ChakraProvider } from '@chakra-ui/react';
 import Balance from '@/components/balance';
-
-// import axios from 'axios';
+import Transfer from '@/components/transfer';
+import AccountList from './accountList/page';
+import axios from 'axios';
 // import { useRouter } from 'next/navigation';
 
 // 子口座の型定義
@@ -15,20 +16,7 @@ import Balance from '@/components/balance';
 // }
 
 export default function Home() {
-  const [accounts, setAccounts] = useState([]);
 
-  useEffect(() => {
-    const fetchAccounts = async () => {
-      try {
-        const response = await axios.get('http://localhost:4000/api/v1/accounts/');
-        const sortedAccounts = response.data.accounts.sort((a, b) => a.id - b.id); //ソート
-        setAccounts(sortedAccounts);
-      } catch (error) {
-        console.error('Error fetching accounts:', error);
-      }
-    };
-    fetchAccounts();
-  }, []);
 
   return (
     <ChakraProvider>
@@ -39,18 +27,10 @@ export default function Home() {
           </Heading>
           <Heading as="h3" fontSize="20" marginBottom="5" textAlign="center">
           <Balance />
+          <Transfer />
              つかいわけ口座一覧
-          </Heading>  
-          {accounts.map(account => (
-            <Flex as="li" key={account.id} justifyContent="center" marginBottom="2">
-              <Link
-                href={`/accountDetail/${account.id}`}
-                _hover={{ textDecoration: 'underline', color: 'blue.500' }}
-              >
-                {account.name}
-              </Link>
-            </Flex>
-          ))}
+          </Heading> 
+          <AccountList />
         </Box>
       </Flex>
     </ChakraProvider>
