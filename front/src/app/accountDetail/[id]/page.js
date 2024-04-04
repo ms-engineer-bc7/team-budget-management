@@ -1,40 +1,41 @@
+"use client"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
-const AccountDetail = () => {
+const AccountDetailPage = () => {
   const [accountDetail, setAccountDetail] = useState(null);
   const router = useRouter();
-  const { id } = router.query;
 
   useEffect(() => {
-    if (id) {
-      const fetchAccountDetail = async () => {
+    const fetchAccountDetail = async () => {
+      if (router.isReady) {
+        const { id } = router.query;
         try {
-          // バックエンドにアカウント詳細をリクエスト
-          const response = await axios.get(`http://localhost:3002/accounts/${id}`);
-          setAccountDetail(response.data);
+          const response = await axios.get(`http://localhost:3002/accountList`);
+          const accountData = response.data.find(account => account.accountId === id);
+          setAccountDetail(accountData);
         } catch (error) {
-          console.error('口座詳細の取得に失敗しました', error);
+          console.error('アカウント情報の取得に失敗しました', error);
         }
-      };
-      fetchAccountDetail();
-    }
-  }, [id]);
+      }
+    };
+
+    fetchAccountDetail();
+  }, [router.isReady, router.query]);
 
   if (!accountDetail) {
-    return <p>Loading...</p>;
+    return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <h1>Account Detail</h1>
-      {/* ここで accountDetail の内容を表示 */}
+      <h1>口座詳細</h1>
       <p>Account ID: {accountDetail.accountId}</p>
       <p>Account Name: {accountDetail.spAccountName}</p>
-      {/* その他の詳細情報 */}
+      {/* その他の情報があれば表示 */}
     </div>
   );
 };
 
-export default AccountDetail;
+export default AccountDetailPage;
