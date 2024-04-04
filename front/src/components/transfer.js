@@ -1,26 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 
 const Transfer = () => {
-  const [depositSpAccountId, setDepositSpAccountId] = useState('');
+  const [accounts, setAccounts] = useState([]); // 口座リストの状態
+  const [selectedAccountId, setSelectedAccountId] = useState(''); // 選択された口座ID
   const [paymentAmount, setPaymentAmount] = useState('');
   const [transferData, setTransferData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  useEffect(() => {
+    // コンポーネントマウント時に口座リストを取得
+    const fetchAccounts = async () => {
+      try {
+        const response = await axios.get('http://localhost:3002/accountList');
+        setAccounts(response.data);
+      } catch (error) {
+        console.error('Error fetching accounts:', error);
+        setError(error);
+      }
+    };
+    fetchAccounts();
+  }, []);
 
   const handleTransfer = async () => {
-    console.log('handleTransfer is called'); // デバッグのために追加
     setLoading(true);
     try {
+      // `selectedAccountId` が未選択の場合のエラーチェックを追加
+      if (!selectedAccountId) {
+        throw new Error('口座を選択してください。');
+      }
+  
       const response = await axios.post('http://localhost:3002/transfer/', {
-        depositSpAccountId,
-        debitSpAccountId: "SP30110008396", //親口座固定
-        currencyCode: "JPY", //日本円
+        depositSpAccountId: selectedAccountId, // 直接選択された口座IDを使用
+        debitSpAccountId: "SP30110008396", // 親口座固定
+        currencyCode: "JPY", // 日本円
         paymentAmount
       });
       setTransferData(response.data);
     } catch (error) {
-      console.error('Error making transfer:', error);
+      console.error('振替処理中にエラーが発生しました:', error);
       setError(error);
     } finally {
       setLoading(false);
@@ -44,12 +63,17 @@ const Transfer = () => {
     <div>
       <h1>つかいわけ口座振替</h1>
       <div>
-        <input
-          type="text"
-          value={depositSpAccountId}
-          onChange={e => setDepositSpAccountId(e.target.value)}
-          placeholder="つかいわけ口座AccountID"
-        />
+        <select
+          value={selectedAccountId}
+          onChange={e => setSelectedAccountId(e.target.value)}
+        >
+          <option value="">口座を選択してください</option>
+          {accounts.map(account => (
+            <option key={account.accountId} value={account.accountId}>
+              {account.spAccountName}
+            </option>
+          ))}
+        </select>
         <input
           type="text"
           value={paymentAmount}
@@ -72,6 +96,7 @@ const Transfer = () => {
     </div>
   );
 };
+
 
 
 export default Transfer;
