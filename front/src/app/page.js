@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Heading, Flex, Box, Link, ChakraProvider } from '@chakra-ui/react';
 import Balance from '@/components/balance';
+import AccountList from '@/app/accountList/page';
 // import axios from 'axios';
 // import { useRouter } from 'next/navigation';
 
@@ -10,7 +11,7 @@ import Balance from '@/components/balance';
 //   id: number;
 //   name: string; //子口座名
 //   budget: number; // この口座の予算
-//   balance: number; // 現在の残高
+//   balance: number; // 現在の残高s
 // }
 
 export default function Home() {
@@ -39,6 +40,7 @@ export default function Home() {
           <Heading as="h3" fontSize="20" marginBottom="5" textAlign="center">
           <Balance />
              つかいわけ口座一覧
+          <AccountList />
           </Heading>  
           {accounts.map(account => (
             <Flex as="li" key={account.id} justifyContent="center" marginBottom="2">
