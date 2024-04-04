@@ -41,7 +41,7 @@ export default function Home() {
           <Balance />
           <Transfer />
              つかいわけ口座一覧
-          </Heading>  
+                    </Heading>  
           {/* {accounts.map(account => (
             <Flex as="li" key={account.id} justifyContent="center" marginBottom="2">
               <Link
