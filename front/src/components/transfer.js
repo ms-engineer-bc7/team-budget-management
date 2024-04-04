@@ -15,7 +15,8 @@ const Transfer = () => {
     const fetchAccounts = async () => {
       try {
         const response = await axios.get('http://localhost:3002/accountList');
-        setAccounts(response.data);
+        const filteredAccounts = response.data.filter(account => account.spAccountName !== "親口座");
+        setAccounts(filteredAccounts);
       } catch (error) {
         console.error('Error fetching accounts:', error);
         setError(error);
