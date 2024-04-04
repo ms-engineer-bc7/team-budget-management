@@ -1,47 +1,39 @@
-"use client";
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, Heading, Text, Input, Button } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 const AccountDetail = () => {
+  const [accountDetail, setAccountDetail] = useState(null);
   const router = useRouter();
   const { id } = router.query;
-  const [account, setAccount] = useState(null);
-  const [amount, setAmount] = useState('');
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://localhost:3000/api/v1/accounts/${id}`)
-        .then(response => setAccount(response.data))
-        .catch(error => console.error('Error fetching account details:', error));
+      const fetchAccountDetail = async () => {
+        try {
+          // バックエンドにアカウント詳細をリクエスト
+          const response = await axios.get(`http://localhost:3002/accounts/${id}`);
+          setAccountDetail(response.data);
+        } catch (error) {
+          console.error('口座詳細の取得に失敗しました', error);
+        }
+      };
+      fetchAccountDetail();
     }
   }, [id]);
 
-  const handleAmountChange = (event) => {
-    setAmount(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // ここで振替のAPIを呼び出し、振替処理を行う
-    //APIエンドポイントに対して振替情報を送信する処理
-    console.log('Transfer amount:', amount);
-  };
-
-  if (!account) return <div>Loading...</div>;
+  if (!accountDetail) {
+    return <p>Loading...</p>;
+  }
 
   return (
-    <Box>
-      <Heading>{account.name}</Heading>
-      <Text>予算: {account.budget}</Text>
-      <Text>残高: {account.balance}</Text>
-
-      <form onSubmit={handleSubmit}>
-        <Input type="number" value={amount} onChange={handleAmountChange} placeholder="振替金額" />
-        <Button type="submit">振替</Button>
-      </form>
-    </Box>
+    <div>
+      <h1>Account Detail</h1>
+      {/* ここで accountDetail の内容を表示 */}
+      <p>Account ID: {accountDetail.accountId}</p>
+      <p>Account Name: {accountDetail.spAccountName}</p>
+      {/* その他の詳細情報 */}
+    </div>
   );
 };
 
