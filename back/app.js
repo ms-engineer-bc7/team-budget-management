@@ -1,12 +1,11 @@
 const createError = require('http-errors');
 const express = require('express');
-// const request = require('request');//APIリクエストルート作成
 const cors = require('cors'); //4/2追加
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-// const axios = require('axios'); // axiosをrequire
 const indexRouter = require('./routes/index');
+const subAccountBalanceRouter = require('./routes/subAccountBalance'); // 子口座残高用
 // var usersRouter = require('./routes/users');
 
 const balanceRouter = require('./routes/balance'); 
@@ -27,10 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
-app.use('/balance', balanceRouter); 
+app.use('/balance', balanceRouter); //親残高
 app.use('/accountList', accountListRouter);//4/3追加
 app.use('/transfer', transferRouter);//振替
-
+app.use('/subAccountBalance', subAccountBalanceRouter);//子残高
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

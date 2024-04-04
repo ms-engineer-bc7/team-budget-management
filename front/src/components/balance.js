@@ -27,7 +27,7 @@ const Balance = () => {
           {balances.map((balance, index) => (
             <li key={index}>
               {/* キーをバックエンドの応答データに合わせて変更 */}
-              日付: {balance.日付}, 残高: {balance.残高}
+              日付: {balance.日付}, 残高: {balance.残高}-
             </li>
           ))}
         </ul>
