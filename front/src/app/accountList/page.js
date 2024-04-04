@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 export default function AccountList() {
   const [accounts, setAccounts] = useState([]);
 
@@ -20,10 +21,9 @@ export default function AccountList() {
 
   return (
     <div>
-      {/* <h1>口座一覧</h1> */}
       <ul>
         {accounts.map((account, index) => (
-          <li key={index}>{account}</li>
+         <li key={index}>{account.spAccountName}</li>
         ))}
       </ul>
     </div>
