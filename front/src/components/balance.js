@@ -21,13 +21,15 @@ const Balance = () => {
 
   return (
     <div>
-      <h1>残高情報</h1>
+      {/* <h1>残高情報</h1> */}
       {balances.length > 0 ? (
-        <ul>
+        // リストスタイルを 'none' に設定して点を非表示にする
+        <ul style={{ listStyleType: "none" }}>
           {balances.map((balance, index) => (
             <li key={index}>
               {/* キーをバックエンドの応答データに合わせて変更 */}
-              日付: {balance.日付}, 残高: {balance.残高}-
+              {/* 日付: {balance.日付}, 残高: {balance.残高}- */}
+              残高: {balance.残高}-({balance.日付})現在
             </li>
           ))}
         </ul>
