@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Heading, Flex, Box, Link, ChakraProvider } from '@chakra-ui/react';
 import Balance from '@/components/balance';
+
 // import axios from 'axios';
 // import { useRouter } from 'next/navigation';
 
