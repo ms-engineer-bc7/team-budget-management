@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
 
 
 export default function AccountList() {
@@ -21,11 +22,20 @@ export default function AccountList() {
 
   return (
     <div>
-      <ul>
+       <ul>
+        {accounts.map((account) => (
+          <li key={account.accountId}>
+            <Link href={`/accountDetail/${account.accountId}`}>
+              {account.spAccountName}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      {/* <ul>
         {accounts.map((account, index) => (
          <li key={index}>{account.spAccountName}</li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }
