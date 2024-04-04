@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 import { Heading, Flex, Box, Link, ChakraProvider } from '@chakra-ui/react';
 import Balance from '@/components/balance';
-import AccountList from '@/app/accountList/page';
-// import axios from 'axios';
+import Transfer from '@/components/transfer';
+import axios from 'axios';
 // import { useRouter } from 'next/navigation';
 
 // 子口座の型定義
@@ -11,24 +11,24 @@ import AccountList from '@/app/accountList/page';
 //   id: number;
 //   name: string; //子口座名
 //   budget: number; // この口座の予算
-//   balance: number; // 現在の残高s
+//   balance: number; // 現在の残高
 // }
 
 export default function Home() {
   const [accounts, setAccounts] = useState([]);
 
-  useEffect(() => {
-    const fetchAccounts = async () => {
-      try {
-        const response = await axios.get('http://localhost:4000/api/v1/accounts/');
-        const sortedAccounts = response.data.accounts.sort((a, b) => a.id - b.id); //ソート
-        setAccounts(sortedAccounts);
-      } catch (error) {
-        console.error('Error fetching accounts:', error);
-      }
-    };
-    fetchAccounts();
-  }, []);
+  // useEffect(() => {
+  //   const fetchAccounts = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:3002/accountList');
+  //       const sortedAccounts = response.data.accounts.sort((a, b) => a.id - b.id); //ソート
+  //       setAccounts(sortedAccounts);
+  //     } catch (error) {
+  //       console.error('Error fetching accounts:', error);
+  //     }
+  //   };
+  //   fetchAccounts();
+  // }, []);
 
   return (
     <ChakraProvider>
@@ -39,10 +39,10 @@ export default function Home() {
           </Heading>
           <Heading as="h3" fontSize="20" marginBottom="5" textAlign="center">
           <Balance />
+          <Transfer />
              つかいわけ口座一覧
-          <AccountList />
-          </Heading>  
-          {accounts.map(account => (
+                    </Heading>  
+          {/* {accounts.map(account => (
             <Flex as="li" key={account.id} justifyContent="center" marginBottom="2">
               <Link
                 href={`/accountDetail/${account.id}`}
@@ -51,7 +51,7 @@ export default function Home() {
                 {account.name}
               </Link>
             </Flex>
-          ))}
+          ))} */}
         </Box>
       </Flex>
     </ChakraProvider>
