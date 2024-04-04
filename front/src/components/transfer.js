@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 
 const Transfer = () => {
+  // const [depositSpAccountId, setDepositSpAccountId] = useState('');
   const [accounts, setAccounts] = useState([]); // 口座リストの状態
   const [selectedAccountId, setSelectedAccountId] = useState(''); // 選択された口座ID
   const [paymentAmount, setPaymentAmount] = useState('');
