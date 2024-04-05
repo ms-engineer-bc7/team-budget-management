@@ -106,8 +106,9 @@ const Transfer = () => {
       <div>
         <h2>振替完了</h2>
         <p>{formatDate(transferData.acceptDatetime)}</p>
-        <p>口座名：{transferData.depositSpAccountId}</p>
-        <p>入金額：{formatCurrency(transferData.paymentAmount)}</p>
+        <p>{accounts.find(account => account.accountId === selectedCreditAccountId).spAccountName}から
+           {accounts.find(account => account.accountId === selectedDebitAccountId).spAccountName}へ
+           {formatCurrency(transferData.paymentAmount)}入金されました</p>
       </div>
     )}
     {error && <div>エラー: {error.message}</div>}
