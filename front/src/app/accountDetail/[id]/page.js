@@ -3,10 +3,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import AccountBalances from '@/components/accountBalances';
+
 import Transfer from '@/components/transfer';
+import Budget from '@/components/budget';
 
 const AccountDetailPage = ({ params }) => {
   const [accountDetail, setAccountDetail] = useState(null);
+  const [accountBudget, setAccountBudget] = useState(null);
   const router = useRouter();
 
   console.log(params); //これでとれる
@@ -28,6 +31,11 @@ const AccountDetailPage = ({ params }) => {
           setAccountDetail(accountData);
           console.log('account ID:', id);//
           console.log('accountData:', accountData);//
+
+          const budgetAmount = Budget[id]; //予算
+          console.log('Budget[id]:', Budget[id]);//
+          console.log('budgetAmount:', budgetAmount);//
+          setAccountBudget(budgetAmount);
         } catch (error) {
           console.error('アカウント情報の取得に失敗しました', error);
         }
@@ -46,7 +54,7 @@ const AccountDetailPage = ({ params }) => {
       <h1>口座詳細</h1>
       <p>つかいわけ口座ID: {accountDetail.accountId}</p>
       <p>口座名: {accountDetail.spAccountName}</p>
-      <p>予算: </p>
+      <div>予算: ￥{new Intl.NumberFormat('ja-JP').format(accountBudget)}-</div>
       <AccountBalances accountId={accountDetail.accountId} />
       <Transfer />
     </div>
