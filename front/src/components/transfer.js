@@ -2,9 +2,9 @@ import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 
 const Transfer = () => {
-  // const [depositSpAccountId, setDepositSpAccountId] = useState('');
   const [accounts, setAccounts] = useState([]); // 口座リストの状態
-  const [selectedAccountId, setSelectedAccountId] = useState(''); // 選択された口座ID
+  const [selectedDebitAccountId, setSelectedDebitAccountId] = useState(''); // 選択された振替元口座ID
+  const [selectedCreditAccountId, setSelectedCreditAccountId] = useState(''); // 選択された振替先口座ID
   const [paymentAmount, setPaymentAmount] = useState('');
   const [transferData, setTransferData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -15,8 +15,7 @@ const Transfer = () => {
     const fetchAccounts = async () => {
       try {
         const response = await axios.get('http://localhost:3002/accountList');
-        const filteredAccounts = response.data.filter(account => account.spAccountName !== "親口座");
-        setAccounts(filteredAccounts);
+        setAccounts(response.data); 
       } catch (error) {
         console.error('Error fetching accounts:', error);
         setError(error);
@@ -29,13 +28,13 @@ const Transfer = () => {
     setLoading(true);
     try {
       // `selectedAccountId` が未選択の場合のエラーチェックを追加
-      if (!selectedAccountId) {
-        throw new Error('口座を選択してください。');
+      if (!selectedDebitAccountId || !selectedCreditAccountId) {
+        throw new Error('両方の口座を選択してください。');
       }
   
       const response = await axios.post('http://localhost:3002/transfer/', {
-        depositSpAccountId: selectedAccountId, // 直接選択された口座IDを使用
-        debitSpAccountId: "SP30110008396", // 親口座固定
+        depositSpAccountId: selectedDebitAccountId, 
+        debitSpAccountId: selectedCreditAccountId,
         currencyCode: "JPY", // 日本円
         paymentAmount
       });
@@ -63,11 +62,13 @@ const Transfer = () => {
 
   return (
     <div>
-      <h1>つかいわけ口座振替</h1>
+    <h1>つかいわけ口座振替</h1>
+    <div>
       <div>
+      <label>出金口座:</label>
         <select
-          value={selectedAccountId}
-          onChange={e => setSelectedAccountId(e.target.value)}
+          value={selectedCreditAccountId}
+          onChange={e => setSelectedCreditAccountId(e.target.value)}
         >
           <option value="">口座を選択してください</option>
           {accounts.map(account => (
@@ -76,26 +77,41 @@ const Transfer = () => {
             </option>
           ))}
         </select>
-        <input
-          type="text"
-          value={paymentAmount}
-          onChange={e => setPaymentAmount(e.target.value)}
-          placeholder="入金金額"
-        />
-        <button onClick={handleTransfer} disabled={loading}>
-          {loading ? '処理中...' : '振替実行'}
-        </button>
+      </div>  
+      <div>
+      <label>入金口座:</label>
+        <select
+          value={selectedDebitAccountId}
+          onChange={e => setSelectedDebitAccountId(e.target.value)}
+        >
+          <option value="">口座を選択してください</option>
+          {accounts.map(account => (
+            <option key={account.accountId} value={account.accountId}>
+              {account.spAccountName}
+            </option>
+          ))}
+        </select>
       </div>
-      {transferData && (
-        <div>
-          <h2>振替完了</h2>
-          <p>{formatDate(transferData.acceptDatetime)}</p>
-          <p>口座名：{transferData.depositSpAccountId}</p>
-          <p>入金額：{formatCurrency(transferData.paymentAmount)}</p>
-        </div>
-      )}
-      {error && <div>エラー: {error.message}</div>}
+      <input
+        type="text"
+        value={paymentAmount}
+        onChange={e => setPaymentAmount(e.target.value)}
+        placeholder="入金金額"
+      />
+      <button onClick={handleTransfer} disabled={loading}>
+        {loading ? '処理中...' : '振替実行'}
+      </button>
     </div>
+    {transferData && (
+      <div>
+        <h2>振替完了</h2>
+        <p>{formatDate(transferData.acceptDatetime)}</p>
+        <p>口座名：{transferData.depositSpAccountId}</p>
+        <p>入金額：{formatCurrency(transferData.paymentAmount)}</p>
+      </div>
+    )}
+    {error && <div>エラー: {error.message}</div>}
+  </div>
   );
 };
 
