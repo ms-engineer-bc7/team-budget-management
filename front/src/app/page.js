@@ -39,7 +39,7 @@ export default function Home() {
               <Balance /> 
           </Heading>
           <Heading as="h3" fontSize="lg" color="gray.600" marginBottom="5" textAlign="center">
-          <Transfer />
+
           </Heading>
           <Heading as="h3" fontSize="lg" color="gray.600" marginBottom="5" textAlign="center">
              項目（つかいわけ口座）

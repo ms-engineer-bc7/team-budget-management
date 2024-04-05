@@ -86,7 +86,7 @@ const AccountDetailPage = ({ params }) => {
           つかいわけ口座ID: {accountDetail.accountId}
           </Text>
           <Text fontSize="lg" color="gray.600" marginBottom="5">
-          予算: 
+          予算: ￥{new Intl.NumberFormat('ja-JP').format(accountBudget)}-
           </Text>
           <Text fontSize="lg" color="gray.600" marginBottom="5">
           <AccountBalances accountId={accountDetail.accountId} />
