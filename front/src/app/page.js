@@ -9,14 +9,6 @@ import AccountList from './accountList/page';
 import axios from 'axios';
 // import { useRouter } from 'next/navigation';
 
-// 子口座の型定義
-// interface Account {
-//   id: number;
-//   name: string; //子口座名
-//   budget: number; // この口座の予算
-//   balance: number; // 現在の残高
-// }
-
 export default function Home() {
   const bgColor = useColorModeValue("pink.50", "purple.900");
   const textColor = useColorModeValue("purple.700", "pink.200");
