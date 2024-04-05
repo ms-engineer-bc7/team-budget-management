@@ -50,15 +50,13 @@
 ## エンドポイント一覧
 - /accountList
 - /balance
-- /subAccountBalance/{id}
+- /subAccountBalance/{accountId}
 
 ## HTTPメソッドとパスパラメータ
 
 - GET　口座一覧照会、残高照会
-- GET {id}　個別残高照会
-- POST 　　　つかいわけ口座間振替
-- PUT {id}
-- DELETE{id}
+- GET {accountId}　個別残高照会
+- POST つかいわけ口座間振替
 
 ## ステータスコード
 
@@ -67,4 +65,3 @@
 - 400 : リクエストが不正
 - 500 : ネットワークエラー
 
-## リクエスト・レスポンス
