@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 
+
 const Transfer = () => {
   const [accounts, setAccounts] = useState([]); // 口座リストの状態
   const [selectedDebitAccountId, setSelectedDebitAccountId] = useState(''); // 選択された振替元口座ID
@@ -9,7 +10,7 @@ const Transfer = () => {
   const [transferData, setTransferData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   useEffect(() => {
     // コンポーネントマウント時に口座リストを取得
     const fetchAccounts = async () => {
@@ -114,7 +115,5 @@ const Transfer = () => {
   </div>
   );
 };
-
-
 
 export default Transfer;

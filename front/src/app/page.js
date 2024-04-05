@@ -19,7 +19,7 @@ export default function Home() {
           <Flex direction="row" align="center" justify="center" mb="5">
           <Image
           src="/images/sunabar.png" // 画像のパスを指定
-          alt="subabarくま"
+          alt="subabar"
           boxSize="200px" // 画像のサイズを設定
           objectFit="cover" // 画像の比率を保ちながら、指定したボックスに合わせて表示
           mr="4"
@@ -37,8 +37,12 @@ export default function Home() {
           </Heading>
           <Heading as="h3" fontSize="lg" color="gray.600" marginBottom="5" textAlign="center">
               <Balance /> 
-              <Transfer />
-             項目（つかいわけ口座CheckList）
+          </Heading>
+          <Heading as="h3" fontSize="lg" color="gray.600" marginBottom="5" textAlign="center">
+          <Transfer />
+          </Heading>
+          <Heading as="h3" fontSize="lg" color="gray.600" marginBottom="5" textAlign="center">
+             項目（つかいわけ口座）
           </Heading>
              <AccountList />
           </Flex>
