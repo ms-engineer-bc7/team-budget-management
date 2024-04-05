@@ -2,27 +2,40 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import AccountBalances from '@/components/accountBalances';
+import Transfer from '@/components/transfer';
 
-const AccountDetailPage = () => {
+const AccountDetailPage = ({ params }) => {
   const [accountDetail, setAccountDetail] = useState(null);
   const router = useRouter();
 
+  console.log(params); //これでとれる
+
   useEffect(() => {
     const fetchAccountDetail = async () => {
-      if (router.isReady) {
-        const { id } = router.query;
+      console.log('fetchAccountDetail.');//動いている
+      // console.log(router);//違う形　ページズルーター
+      // console.log(router.isReady);//undefind　ページズルーター
+      // console.log(router.query);//undefind　ページズルーター
+      if (params.id) {
+        console.log('if文入った？');//
+        const { id } = params;
+        console.log('params.id:', params.id);//
         try {
           const response = await axios.get(`http://localhost:3002/accountList`);
+          console.log('response.data:', response.data);//オブジェクト取得
           const accountData = response.data.find(account => account.accountId === id);
           setAccountDetail(accountData);
+          console.log('account ID:', id);//
+          console.log('accountData:', accountData);//
         } catch (error) {
           console.error('アカウント情報の取得に失敗しました', error);
         }
       }
     };
-
+    console.log('AccountDetailPage');//動いている
     fetchAccountDetail();
-  }, [router.isReady, router.query]);
+  }, [params.id]);
 
   if (!accountDetail) {
     return <div>Loading...</div>;
@@ -31,9 +44,11 @@ const AccountDetailPage = () => {
   return (
     <div>
       <h1>口座詳細</h1>
-      <p>Account ID: {accountDetail.accountId}</p>
-      <p>Account Name: {accountDetail.spAccountName}</p>
-      {/* その他の情報があれば表示 */}
+      <p>つかいわけ口座ID: {accountDetail.accountId}</p>
+      <p>口座名: {accountDetail.spAccountName}</p>
+      <p>予算: </p>
+      <AccountBalances accountId={accountDetail.accountId} />
+      <Transfer />
     </div>
   );
 };
