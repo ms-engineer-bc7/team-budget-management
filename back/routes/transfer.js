@@ -18,7 +18,7 @@ router.post('/', async(req, res) => {
       },
       data: {  // ここをbodyからdataに変更
         "depositSpAccountId":req.body.depositSpAccountId, //"SP50220608077", 
-        "debitSpAccountId":"SP30110008396",   //req.body.debitSpAccountId,
+        "debitSpAccountId":req.body.debitSpAccountId, //"SP30110008396"
         "currencyCode":"JPY",   //req.body.currencyCode,
         "paymentAmount":req.body.paymentAmount  //"1000" 
       },
