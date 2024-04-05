@@ -4,10 +4,13 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { Box, Flex, Heading, Text, Image, useColorModeValue } from '@chakra-ui/react';
 import AccountBalances from '@/components/accountBalances';
+
 import Transfer from '@/components/transfer';
+import Budget from '@/components/budget';
 
 const AccountDetailPage = ({ params }) => {
   const [accountDetail, setAccountDetail] = useState(null);
+  const [accountBudget, setAccountBudget] = useState(null);
   const router = useRouter();
   // const bgColor = useColorModeValue("pink.50", "purple.900");
   // const textColor = useColorModeValue("purple.700", "pink.200");
@@ -35,6 +38,11 @@ const AccountDetailPage = ({ params }) => {
           setAccountDetail(accountData);
           console.log('account ID:', id);//
           console.log('accountData:', accountData);//
+
+          const budgetAmount = Budget[id]; //予算
+          console.log('Budget[id]:', Budget[id]);//
+          console.log('budgetAmount:', budgetAmount);//
+          setAccountBudget(budgetAmount);
         } catch (error) {
           console.error('アカウント情報の取得に失敗しました', error);
         }
@@ -49,6 +57,7 @@ const AccountDetailPage = ({ params }) => {
   }
 
   return (
+
     <Flex bgColor={bgColor} minHeight="100vh" align="center" justify="center" direction="column">
       <Flex align="center" justify="center" mb="5">
         <Image
@@ -88,6 +97,7 @@ const AccountDetailPage = ({ params }) => {
         </Flex>
     </Box>
   </Flex>
+
   );
 };
 

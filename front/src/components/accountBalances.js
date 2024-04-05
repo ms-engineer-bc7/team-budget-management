@@ -9,7 +9,7 @@ const AccountBalances = ({ accountId }) => { // accountIdをpropsとして受け
             try {
                 // APIエンドポイントにaccountIdを埋め込んでリクエストを送る
                 const response = await axios.get(`http://localhost:3002/subAccountBalance/${accountId}`);
-　　　　　　　　　　setBalances(response.data);
+                setBalances(response.data);
 
                 // const response = await axios.get('http://localhost:3002/subAccountBalance/${accountId}');
                 // setBalances(response.data);
